@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
 {
     private PlayerMovementController _movementController;
 
-    private float speed = 6.5f;
+    [SerializeField] private float speed = 6.5f;
+    [SerializeField] private float _rotationSpeed = 30f;
 
     private Vector2 _movementInput;
 
@@ -23,6 +24,9 @@ public class Player : MonoBehaviour
         //Movement
         Vector3 targetMovementDirection = new Vector3(_movementInput.x, 0, _movementInput.y);
         _movementController.Move(targetMovementDirection.normalized * speed);
+
+        Quaternion targetRotation = Quaternion.LookRotation(targetMovementDirection);
+        _movementController.RotateTo(targetRotation, _rotationSpeed);
     }
 
     void ProcessInput()
