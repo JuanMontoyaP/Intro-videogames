@@ -10,10 +10,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 30f;
 
     private Vector2 _movementInput;
+    private Quaternion _targetRotation;
+    private Camera _cam;
 
     void Start()
     {
         _movementController = GetComponent<PlayerMovementController>();
+        _cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -25,12 +28,27 @@ public class Player : MonoBehaviour
         Vector3 targetMovementDirection = new Vector3(_movementInput.x, 0, _movementInput.y);
         _movementController.Move(targetMovementDirection.normalized * speed);
 
-        Quaternion targetRotation = Quaternion.LookRotation(targetMovementDirection);
-        _movementController.RotateTo(targetRotation, _rotationSpeed);
+        // _targetRotation = Quaternion.LookRotation(targetMovementDirection);
+        _movementController.RotateTo(_targetRotation, _rotationSpeed);
     }
 
     void ProcessInput()
     {
         _movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        CalculateTargetRotation();
+    }
+
+    void CalculateTargetRotation()
+    {
+        Vector2 mouseScreenPosition = Input.mousePosition;
+        RaycastHit hit;
+        Ray ray = _cam.ScreenPointToRay(mouseScreenPosition);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Vector3 dir = (hit.point - transform.position).normalized;
+            _targetRotation = Quaternion.LookRotation(dir);
+        }
     }
 }
