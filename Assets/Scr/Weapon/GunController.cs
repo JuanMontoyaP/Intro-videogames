@@ -9,6 +9,11 @@ public class GunController : MonoBehaviour
 
     public void OnTriggerHold()
     {
-        _currentGun.Shoot();
+        _currentGun.OnTriggerHold();
+    }
+
+    public void OnTriggerRelease()
+    {
+        _currentGun.OnTriggerRelease();
     }
 }

@@ -27,5 +27,15 @@ public class Projectile : MonoBehaviour
         float movementDistance = _speed * Time.deltaTime;
         Vector3 translation = Vector3.forward * movementDistance;
         transform.Translate(translation);
+        CheckCollision(translation);
+    }
+
+    private void CheckCollision(Vector3 translation)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, translation.magnitude))
+        {
+            Destroy(gameObject);
+        }
     }
 }

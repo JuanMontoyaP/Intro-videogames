@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-
+            _gunController.OnTriggerRelease();
         }
     }
 
