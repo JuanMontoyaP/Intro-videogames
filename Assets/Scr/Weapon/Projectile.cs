@@ -9,16 +9,19 @@ public class Projectile : MonoBehaviour
 
     private float _timeToDisable = 3;
 
+    [Header("Testing...")] public LayerMask maskCollision;
+
     void Start()
     {
         _timeToDisable = _lifeTime;
+        CheckInitialCollision();
     }
 
     void Update()
     {
         if (_timeToDisable <= 0)
         {
-            Destroy(gameObject);
+            DestroyProjectile();
             return;
         }
 
@@ -30,12 +33,28 @@ public class Projectile : MonoBehaviour
         CheckCollision(translation);
     }
 
+    private void CheckInitialCollision()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 0.25f, maskCollision);
+        foreach (Collider hitCollider in hitColliders)
+        {
+            Debug.LogError("Initial collision with " + transform.name);
+            DestroyProjectile();
+        }
+    }
+
     private void CheckCollision(Vector3 translation)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, translation.magnitude))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, translation.magnitude, maskCollision))
         {
-            Destroy(gameObject);
+            DestroyProjectile();
         }
+    }
+
+    private void DestroyProjectile()
+    {
+        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
