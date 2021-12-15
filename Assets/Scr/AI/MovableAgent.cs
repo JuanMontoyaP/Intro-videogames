@@ -15,6 +15,8 @@ public class MovableAgent : MonoBehaviour
     private NavMeshAgent m_NavMeshAgent;
     private Vector3 m_TargetPosition;
     private Action m_OnArrive;
+
+    public Vector3 TargetPosition => m_TargetPosition;
     
     void Start()
     {
