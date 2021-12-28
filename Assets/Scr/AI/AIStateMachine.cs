@@ -6,7 +6,7 @@ public class AIStateMachine
 {
     private AIState[] _states;
     private AIAgent _agent;
-    private AIStateID _currentStateID = AIStateID.ChaseTarget;
+    private AIStateID _currentStateID = AIStateID.Idle;
 
     public AIStateMachine(AIAgent agent)
     {
@@ -37,5 +37,16 @@ public class AIStateMachine
         }
         // currentState?.Update(_agent);
         // GetState(_currentStateID)?.Update(_agent);
+    }
+
+    public void ChangeState(AIStateID newStateID)
+    {
+        AIState currentState = GetState(_currentStateID);
+        currentState?.Exit(_agent);
+
+        _currentStateID = newStateID;
+
+        currentState = GetState(_currentStateID);
+        currentState?.Enter(_agent);
     }
 }

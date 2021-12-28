@@ -10,6 +10,7 @@ public class AIAgent : MonoBehaviour
 
     public Transform Target => _player;
     public MovableAgent MovableAgent => _movableAgent; 
+    public AIStateMachine StateMachine => _stateMachine;
 
     void Start()
     {
