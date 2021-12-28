@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum AgentState
+public enum NavMeshAgentState
 {
     Idle,
     Moving,
@@ -10,14 +10,14 @@ public enum AgentState
 
 public class MovableAgent : MonoBehaviour
 {
-    public AgentState State
+    public NavMeshAgentState State
     {
         get
         {
             if (m_NavMeshAgent.remainingDistance <= m_NavMeshAgent.stoppingDistance && m_NavMeshAgent.velocity.sqrMagnitude == 0)
-                return AgentState.Idle;
+                return NavMeshAgentState.Idle;
 
-            return AgentState.Moving;
+            return NavMeshAgentState.Moving;
         }
     }
 
@@ -36,7 +36,7 @@ public class MovableAgent : MonoBehaviour
     {
         if (m_OnArrive != null)
         {
-            if (!m_NavMeshAgent.pathPending && State == AgentState.Idle)
+            if (!m_NavMeshAgent.pathPending && State == NavMeshAgentState.Idle)
             {
                 m_OnArrive();
                 m_OnArrive = null;
