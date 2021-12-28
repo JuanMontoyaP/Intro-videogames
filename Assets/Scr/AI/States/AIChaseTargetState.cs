@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AIChaseTargetState : AIState
 {
+    private float _timerToRefresh = 0f;
     public AIStateID GetID()
     {
         return AIStateID.ChaseTarget;
@@ -16,9 +17,17 @@ public class AIChaseTargetState : AIState
 
     public void Update(AIAgent agent)
     {
-        if (agent.Target != null /*&& Vector3.Distance(m_Target.position, m_MovableAgent.TargetPosition) > 0.5f*/)
+        if (agent.Target == null)
         {
-            agent.MovableAgent.GoTo(agent.Target.position);
+           return;
+        }
+
+        _timerToRefresh -= Time.deltaTime;
+        if (_timerToRefresh < 0f)
+        {
+            Vector3 directionToTarget = (agent.Target.position - agent.transform.position).normalized;
+            agent.MovableAgent.GoTo(agent.Target.position - directionToTarget * 1.0f);
+            _timerToRefresh = 0.5f;
         }
     }
 
