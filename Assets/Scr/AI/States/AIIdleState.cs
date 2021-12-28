@@ -17,7 +17,7 @@ public class AIIdleState : AIState
     public void Update(AIAgent agent)
     {
         Vector3 targetDirection = agent.Target.position - agent.transform.position;
-        if (targetDirection.magnitude > 3.5)
+        if (targetDirection.magnitude > agent.AIConfig.detectRange)
         {
             return;
         }

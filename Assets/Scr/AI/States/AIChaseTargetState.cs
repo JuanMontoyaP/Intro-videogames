@@ -27,7 +27,7 @@ public class AIChaseTargetState : AIState
         {
             Vector3 directionToTarget = (agent.Target.position - agent.transform.position).normalized;
             agent.MovableAgent.GoTo(agent.Target.position - directionToTarget * 1.0f);
-            _timerToRefresh = 0.5f;
+            _timerToRefresh = agent.AIConfig.pathfindingRefreshTime;
         }
     }
 
