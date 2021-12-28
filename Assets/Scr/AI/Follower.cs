@@ -7,7 +7,7 @@ public class Follower : MonoBehaviour
     [SerializeField] private Transform m_Target;
 
     private MovableAgent m_MovableAgent;
- 
+
     void Start()
     {
         m_MovableAgent = GetComponent<MovableAgent>();
