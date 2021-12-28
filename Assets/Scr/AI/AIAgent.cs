@@ -23,6 +23,7 @@ public class AIAgent : MonoBehaviour
 
         _stateMachine.AddState(new AIIdleState());
         _stateMachine.AddState(new AIChaseTargetState());
+        _stateMachine.AddState(new AIAttackState());
     }
 
     void Update()
