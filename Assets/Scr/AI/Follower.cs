@@ -15,9 +15,14 @@ public class Follower : MonoBehaviour
 
     void Update()
     {
-        if (m_Target != null)
+        if (m_Target != null && Vector3.Distance(m_Target.position, m_MovableAgent.TargetPosition) > 0.5f)
         {
-            m_MovableAgent.GoTo(m_Target.position);
+            m_MovableAgent.GoTo(m_Target.position, OnArrive);
         }
+    }
+
+    private void OnArrive()
+    {
+        Debug.Log("Arrived");
     }
 }

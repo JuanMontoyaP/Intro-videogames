@@ -28,10 +28,13 @@ public class MovableAgent : MonoBehaviour
         if (State == AgentState.Moving)
         {
             var distance = Vector3.Distance(transform.position, m_TargetPosition);
-            if (distance <= m_NavMeshAgent.stoppingDistance)
+            if (distance <=2f)
             {
                 State = AgentState.Idle;
-                m_OnArrive();
+                if (m_OnArrive != null)
+                {
+                    m_OnArrive();
+                }
                 m_OnArrive = null;
             }
         }
