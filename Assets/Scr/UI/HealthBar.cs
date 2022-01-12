@@ -1,18 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private LivingEntity _TargetEntity;
+    [SerializeField] private Vector2 _Offset;
+    
+    private Transform _TargetTransform; 
+    private Image _BarImage;
+    
     void Start()
     {
-        
+        _TargetTransform = _TargetEntity.transform;
+
+        var barTransform = transform.Find("Bar");
+        if (barTransform == null)
+        {
+            throw new System.NullReferenceException("Change bar name");
+        }
+        _BarImage = barTransform.GetComponent<Image>();
+
+        _TargetEntity.OnDeath += OnDeath;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        var targetPosition = _TargetTransform.position;
+        var screenPosition = Camera.main.WorldToScreenPoint(targetPosition);
+
+        transform.position = (Vector2)screenPosition + _Offset;
+
+        var healthNormalized = (float)_TargetEntity.CurrentHealth / (float)_TargetEntity.TotalHealth;
+        _BarImage.fillAmount = healthNormalized;
+    }
+
+    void OnDeath()
+    {
+        gameObject.SetActive(false);
     }
 }
