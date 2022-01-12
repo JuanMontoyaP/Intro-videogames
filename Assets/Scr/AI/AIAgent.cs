@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AIAgent : MonoBehaviour
 {
+    public static Action<int> OnEnemyDeath;
+
     [SerializeField] private Transform _player;
     [SerializeField] private AIConfig _aiConfig;
+    [SerializeField] private int _score = 10;
 
     private MovableAgent _movableAgent;
     private AIStateMachine _stateMachine;
@@ -55,5 +59,7 @@ public class AIAgent : MonoBehaviour
         _movableAgent.Stop();
 
         gameObject.SetActive(false);
+
+        OnEnemyDeath?.Invoke(_score);
     }
 }

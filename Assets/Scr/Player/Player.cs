@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public delegate void PlayerTakeHitAction(int damage, int currentHealth);
+    public static event PlayerTakeHitAction OnPlayerTakeHit;
+
     private PlayerMovementController _movementController;
     private GunController _gunController;
     private IDamageable _damageable;
@@ -23,6 +26,7 @@ public class Player : MonoBehaviour
         _gunController = GetComponent<GunController>();
         
         _damageable = GetComponent<IDamageable>();
+        _damageable.OnTakeHit += OnTakeHit;
         _damageable.OnDeath += OnDeath;
 
         _cam = Camera.main;
@@ -34,6 +38,7 @@ public class Player : MonoBehaviour
         if (_damageable != null)
         {
             _damageable.OnDeath -= OnDeath;
+            _damageable.OnTakeHit -= OnTakeHit;
         }
     }
 
@@ -90,6 +95,11 @@ public class Player : MonoBehaviour
            Vector3 dir = (pointHit - transform.position).normalized;
             _targetRotation = Quaternion.LookRotation(dir);
         }
+    }
+
+    private void OnTakeHit(int damage)
+    {
+        OnPlayerTakeHit?.Invoke(damage, _damageable.CurrentHealth);
     }
 
     private void OnDeath()

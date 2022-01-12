@@ -13,7 +13,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public int TotalHealth => _totalHealth;
     public int CurrentHealth => _currentHealth;
     public bool IsDead => _isDead;
+    public Action<int> OnTakeHit { get; set; }
     public Action OnDeath { get; set; }
+    
 
     private void Start()
     {
@@ -23,8 +25,13 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public void TakeHit(int damage, Vector3 hitPoint, Vector3 hitDirection)
     {
+        if (_isDead)
+        {
+            return;
+        }
         // TODO: Add VFX
         ApplyDamage(damage);
+        OnTakeHit?.Invoke(damage);
     }
 
     public void ApplyDamage(int damage)

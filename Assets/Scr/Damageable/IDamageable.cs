@@ -7,6 +7,7 @@ public interface IDamageable
     int CurrentHealth { get; }
     bool IsDead { get; }
     Action OnDeath { get; set; }
+    Action<int> OnTakeHit { get; set; }
 
     void TakeHit(int damage, Vector3 hitPoint, Vector3 hitDirection);
     void ApplyDamage(int damage);
