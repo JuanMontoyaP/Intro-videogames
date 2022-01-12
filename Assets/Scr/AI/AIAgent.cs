@@ -9,6 +9,7 @@ public class AIAgent : MonoBehaviour
 
     private MovableAgent _movableAgent;
     private AIStateMachine _stateMachine;
+    private IDamageable _damageableEntity;
 
     public Transform Target => _player;
     public AIConfig AIConfig => _aiConfig;
@@ -18,6 +19,7 @@ public class AIAgent : MonoBehaviour
     void Start()
     {
         _movableAgent = GetComponent<MovableAgent>();
+        _damageableEntity = GetComponent<IDamageable>();
 
         _stateMachine = new AIStateMachine(this);
 
@@ -28,6 +30,10 @@ public class AIAgent : MonoBehaviour
 
     void Update()
     {
+        if (_damageableEntity.IsDead)
+        {
+            return;
+        }
         _stateMachine.Update();
     }
 }

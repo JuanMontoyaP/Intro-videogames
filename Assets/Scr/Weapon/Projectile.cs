@@ -39,6 +39,12 @@ public class Projectile : MonoBehaviour
         foreach (Collider hitCollider in hitColliders)
         {
             Debug.LogError("Initial collision with " + transform.name);
+
+            if (hitCollider.transform.TryGetComponent<IDamageable>(out IDamageable target))
+            {
+                target.TakeHit(1, transform.position, transform.forward);
+            }
+
             DestroyProjectile();
         }
     }
@@ -48,6 +54,10 @@ public class Projectile : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, translation.magnitude, maskCollision))
         {
+            if (hit.transform.TryGetComponent<IDamageable>(out IDamageable target))
+            {
+                target.TakeHit(1, hit.point, hit.normal);
+            }
             DestroyProjectile();
         }
     }
