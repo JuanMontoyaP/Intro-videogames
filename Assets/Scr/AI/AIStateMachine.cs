@@ -49,4 +49,12 @@ public class AIStateMachine
         currentState = GetState(_currentStateID);
         currentState?.Enter(_agent);
     }
+
+    public void Stop()
+    {
+        AIState currentState = GetState(_currentStateID);
+        currentState?.Exit(_agent);
+
+        _currentStateID = AIStateID.Idle;
+    }
 }

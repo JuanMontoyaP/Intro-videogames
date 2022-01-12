@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public int TotalHealth => _totalHealth;
     public int CurrentHealth => _currentHealth;
     public bool IsDead => _isDead;
+    public Action OnDeath { get; set; }
 
     private void Start()
     {
@@ -39,6 +41,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
         _isDead = true;
         Debug.LogError("I'm dead!");
 
-        
+        OnDeath?.Invoke();
     }
 }

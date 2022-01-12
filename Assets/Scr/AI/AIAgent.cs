@@ -21,11 +21,21 @@ public class AIAgent : MonoBehaviour
         _movableAgent = GetComponent<MovableAgent>();
         _damageableEntity = GetComponent<IDamageable>();
 
+        _damageableEntity.OnDeath += OnDeath;
+
         _stateMachine = new AIStateMachine(this);
 
         _stateMachine.AddState(new AIIdleState());
         _stateMachine.AddState(new AIChaseTargetState());
         _stateMachine.AddState(new AIAttackState());
+    }
+
+    private void OnDestroy()
+    {
+        if (_damageableEntity != null)
+        {
+            _damageableEntity.OnDeath -= OnDeath;
+        }
     }
 
     void Update()
@@ -35,5 +45,13 @@ public class AIAgent : MonoBehaviour
             return;
         }
         _stateMachine.Update();
+    }
+
+    private void OnDeath()
+    {
+        Debug.LogError("Stop enemy systems...");
+
+        _stateMachine.Stop();
+        _movableAgent.Stop();
     }
 }

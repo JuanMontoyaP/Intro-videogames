@@ -3,6 +3,7 @@ public enum AIStateID
     Idle = 0,
     ChaseTarget = 1,
     Attack = 2,
+    Patrol = 3,
 }
 
 public interface AIState

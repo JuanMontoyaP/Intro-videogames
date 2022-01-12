@@ -14,7 +14,7 @@ public class MovableAgent : MonoBehaviour
     {
         get
         {
-            if (m_NavMeshAgent.remainingDistance <= m_NavMeshAgent.stoppingDistance && m_NavMeshAgent.velocity.sqrMagnitude == 0)
+            if (m_NavMeshAgent.isStopped || (m_NavMeshAgent.remainingDistance <= m_NavMeshAgent.stoppingDistance && m_NavMeshAgent.velocity.sqrMagnitude == 0))
                 return NavMeshAgentState.Idle;
 
             return NavMeshAgentState.Moving;
@@ -46,8 +46,14 @@ public class MovableAgent : MonoBehaviour
 
     public void GoTo(Vector3 position, Action onArrive = null)
     {
+        m_NavMeshAgent.isStopped = false;
         m_OnArrive = onArrive;
         m_TargetPosition = position;
         m_NavMeshAgent.SetDestination(position);
+    }
+
+    public void Stop()
+    {
+        m_NavMeshAgent.isStopped = true;
     }
 }
