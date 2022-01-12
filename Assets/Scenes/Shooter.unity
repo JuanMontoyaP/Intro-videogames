@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 142216172}
   - component: {fileID: 142216171}
   - component: {fileID: 142216173}
+  - component: {fileID: 142216174}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -341,6 +342,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentGun: {fileID: 1184182060}
+--- !u!114 &142216174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142216167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1701d80015b9d4a8ae4d58c7f3d9fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _totalHealth: 2
 --- !u!1 &198112965
 GameObject:
   m_ObjectHideFlags: 0

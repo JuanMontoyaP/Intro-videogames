@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     private PlayerMovementController _movementController;
     private GunController _gunController;
+    private IDamageable _damageable;
 
     [SerializeField] private float speed = 6.5f;
     [SerializeField] private float _rotationSpeed = 30f;
@@ -20,13 +21,29 @@ public class Player : MonoBehaviour
     {
         _movementController = GetComponent<PlayerMovementController>();
         _gunController = GetComponent<GunController>();
+        
+        _damageable = GetComponent<IDamageable>();
+        _damageable.OnDeath += OnDeath;
+
         _cam = Camera.main;
         _worldPlane = new Plane(Vector3.up, Vector3.zero);
     }
 
-    // Update is called once per frame
+    private void OnDestroy()
+    {
+        if (_damageable != null)
+        {
+            _damageable.OnDeath -= OnDeath;
+        }
+    }
+
     void Update()
     {
+        if (_damageable.IsDead)
+        {
+            return;
+        }
+
         ProcessInput();
 
         //Movement
@@ -73,5 +90,10 @@ public class Player : MonoBehaviour
            Vector3 dir = (pointHit - transform.position).normalized;
             _targetRotation = Quaternion.LookRotation(dir);
         }
+    }
+
+    private void OnDeath()
+    {
+        Debug.LogError("I'm dead");
     }
 }

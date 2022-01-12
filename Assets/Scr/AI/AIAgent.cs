@@ -53,5 +53,7 @@ public class AIAgent : MonoBehaviour
 
         _stateMachine.Stop();
         _movableAgent.Stop();
+
+        gameObject.SetActive(false);
     }
 }

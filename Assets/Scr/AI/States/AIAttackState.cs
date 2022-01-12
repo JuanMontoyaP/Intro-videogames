@@ -13,7 +13,11 @@ public class AIAttackState : AIState
 
     public void Enter(AIAgent agent)
     {
-        Debug.LogError("Attacking to player");
+        if (agent.Target.TryGetComponent(out IDamageable target))
+        {
+            target.TakeHit(1, agent.Target.position, agent.Target.forward);
+        }
+        
         _timer = agent.AIConfig.attackDuration;
     }
 
