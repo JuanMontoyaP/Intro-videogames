@@ -7,6 +7,7 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private LivingEntity _TargetEntity;
     [SerializeField] private Vector2 _Offset;
+    [SerializeField] private Gradient _Color;
     
     private Transform _TargetTransform; 
     private Image _BarImage;
@@ -34,6 +35,9 @@ public class HealthBar : MonoBehaviour
 
         var healthNormalized = (float)_TargetEntity.CurrentHealth / (float)_TargetEntity.TotalHealth;
         _BarImage.fillAmount = healthNormalized;
+
+        var color = _Color.Evaluate(healthNormalized);
+        _BarImage.color = color;
     }
 
     void OnDeath()
